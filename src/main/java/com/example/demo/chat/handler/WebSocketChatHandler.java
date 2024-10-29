@@ -1,5 +1,8 @@
 package com.example.demo.chat.handler;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -12,12 +15,20 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSocketChatHandler extends TextWebSocketHandler{
 	// 클라이언트가 발송한 메시지 받아서 치리해줄 Handler
 	
+	private Set<WebSocketSession> sessions = new HashSet<>();
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		sessions.add(session);
+		
 		String payload = message.getPayload();
 		log.info("payload {}",payload); // client에게 받은 메시지 log에 출력
-		TextMessage textMessage = new TextMessage("Welcome chatting server");
-		session.sendMessage(textMessage); // client에게 환영 메시지 보내기
+
+		TextMessage textMessage = new TextMessage(payload);
+
+		for (WebSocketSession ss : sessions) {
+			ss.sendMessage(textMessage);
+		}
+//		session.sendMessage(textMessage); // client에게 메시지 보내기
 	}
 }

@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSocket // WebSocket 활성화
 public class WebSocketConfig implements WebSocketConfigurer{
 	
-	private final WebSocketHandler webSocketHandler;
+	private final WebSocketHandler webSocketHandler; // WebSocketChatHandler extends TextWebSocketHandler 쭉 타고가면 WebSocketHandler 있음
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
