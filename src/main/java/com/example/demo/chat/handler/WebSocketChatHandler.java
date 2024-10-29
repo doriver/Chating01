@@ -17,6 +17,10 @@ public class WebSocketChatHandler extends TextWebSocketHandler{
 	
 	private Set<WebSocketSession> sessions = new HashSet<>();
 	
+	/*
+	 * 클라이언트는 서버에 접속하면 개별 WebSocketSession를 갖는다
+	 * 클라이언트 ~ WebSocketSession
+	 */
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		sessions.add(session);
